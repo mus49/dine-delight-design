@@ -52,6 +52,17 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+                // Food ordering theme colors
+                food: {
+                    primary: '#FF5A1F', // warm orange
+                    secondary: '#FFB088', // light orange
+                    accent: '#FF3B30', // vibrant red
+                    dark: '#1F2937', // dark blue-gray
+                    light: '#F9FAFB', // off-white
+                    success: '#10B981', // green
+                    warning: '#FBBF24', // yellow
+                    muted: '#9CA3AF', // gray
+                },
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
