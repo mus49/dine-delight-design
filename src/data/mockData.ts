@@ -89,7 +89,7 @@ export const menuItems: MenuItem[] = [
     restaurantId: "r1",
     name: "Margherita Pizza",
     description: "Classic tomato sauce, fresh mozzarella, basil, and olive oil",
-    price: 14.99,
+    price: 4.99,
     image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=800",
     category: "Pizzas",
     popular: true,
@@ -136,7 +136,7 @@ export const menuItems: MenuItem[] = [
     restaurantId: "r1",
     name: "Pepperoni Pizza",
     description: "Tomato sauce, mozzarella, and plenty of pepperoni",
-    price: 16.99,
+    price: 6.99,
     image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=800",
     category: "Pizzas",
     popular: true,
@@ -170,7 +170,7 @@ export const menuItems: MenuItem[] = [
     restaurantId: "r1",
     name: "Vegetarian Supreme",
     description: "Tomato sauce, mozzarella, bell peppers, onions, mushrooms, olives, and spinach",
-    price: 17.99,
+    price: 7.99,
     image: "https://images.unsplash.com/photo-1604917877934-07d8d248d382?q=80&w=800",
     category: "Pizzas",
     popular: false,
@@ -193,7 +193,7 @@ export const menuItems: MenuItem[] = [
     restaurantId: "r1",
     name: "Garden Salad",
     description: "Fresh mixed greens, tomatoes, cucumbers, and house dressing",
-    price: 7.99,
+    price: 2.99,
     image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=800",
     category: "Sides",
     popular: false
@@ -203,7 +203,7 @@ export const menuItems: MenuItem[] = [
     restaurantId: "r1",
     name: "Garlic Bread",
     description: "Freshly baked bread topped with garlic butter and herbs",
-    price: 5.99,
+    price: 2.99,
     image: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?q=80&w=800",
     category: "Sides",
     popular: true
@@ -213,7 +213,7 @@ export const menuItems: MenuItem[] = [
     restaurantId: "r1",
     name: "Tiramisu",
     description: "Classic Italian dessert with layers of coffee-soaked ladyfingers and mascarpone cream",
-    price: 8.99,
+    price: 4.99,
     image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=800",
     category: "Desserts",
     popular: true
@@ -227,7 +227,7 @@ export const burgerMenuItems: MenuItem[] = [
     restaurantId: "r2",
     name: "Butter Chicken",
     description: "Tender chicken pieces in rich, creamy tomato-based curry with butter and cream",
-    price: 499,
+    price: 4.99,
     image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?q=80&w=800",
     category: "Main Course",
     popular: true,
@@ -247,8 +247,8 @@ export const burgerMenuItems: MenuItem[] = [
         id: "o2",
         name: "Extras",
         choices: [
-          { id: "c4", name: "Extra Naan", price: 30 },
-          { id: "c5", name: "Extra Gravy", price: 40 }
+          { id: "c4", name: "Extra Naan", price: 0.5 },
+          { id: "c5", name: "Extra Gravy", price: 0.6 }
         ],
         required: false,
         multiSelect: true
@@ -260,7 +260,7 @@ export const burgerMenuItems: MenuItem[] = [
     restaurantId: "r2",
     name: "Paneer Tikka Masala",
     description: "Grilled cottage cheese cubes in a rich, spiced tomato-based curry",
-    price: 399,
+    price: 3.99,
     image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?q=80&w=800",
     category: "Main Course",
     popular: true,
@@ -283,7 +283,7 @@ export const burgerMenuItems: MenuItem[] = [
     restaurantId: "r2",
     name: "Dal Tadka",
     description: "Yellow lentils tempered with cumin, garlic, and spices",
-    price: 249,
+    price: 2.49,
     image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=800",
     category: "Main Course",
     popular: false
@@ -293,7 +293,7 @@ export const burgerMenuItems: MenuItem[] = [
     restaurantId: "r2",
     name: "Garlic Naan",
     description: "Freshly baked Indian bread with garlic and butter",
-    price: 49,
+    price: 0.49,
     image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=800",
     category: "Breads",
     popular: true
@@ -303,7 +303,7 @@ export const burgerMenuItems: MenuItem[] = [
     restaurantId: "r2",
     name: "Jeera Rice",
     description: "Basmati rice cooked with cumin seeds",
-    price: 149,
+    price: 1.49,
     image: "https://images.unsplash.com/photo-1596097557993-54e1bbd4e13b?q=80&w=800",
     category: "Rice",
     popular: false
@@ -317,7 +317,7 @@ export const sushiMenuItems: MenuItem[] = [
     restaurantId: "r3",
     name: "California Roll",
     description: "Crab, avocado, and cucumber rolled in sushi rice and seaweed",
-    price: 8.99,
+    price: 4.99,
     image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=800",
     category: "Rolls",
     popular: true
@@ -327,7 +327,7 @@ export const sushiMenuItems: MenuItem[] = [
     restaurantId: "r3",
     name: "Salmon Nigiri",
     description: "Fresh salmon on pressed sushi rice",
-    price: 6.99,
+    price: 3.99,
     image: "https://images.unsplash.com/photo-1648146299056-df4620d84f88?q=80&w=800",
     category: "Nigiri",
     popular: true
