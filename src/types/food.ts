@@ -46,6 +46,7 @@ export interface MenuItemOption {
 export interface CartItem {
   id: string;
   menuItemId: string;
+  name: string;
   quantity: number;
   selectedOptions: {
     optionId: string;

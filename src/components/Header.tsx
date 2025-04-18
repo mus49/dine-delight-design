@@ -11,7 +11,9 @@ import {
   Home, 
   ShoppingCart, 
   User, 
-  Clock
+  Clock,
+  IndianRupee,
+  Trash2
 } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { 
@@ -32,7 +34,7 @@ import {
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { items, cartTotal } = useCart();
+  const { items, cartTotal, cartSubtotal, deliveryFee, tax, removeFromCart, updateQuantity, restaurant } = useCart();
   
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-gray-200">
@@ -91,21 +93,102 @@ export function Header() {
                   <ShoppingBag className="h-16 w-16 text-gray-300 mb-4" />
                   <p className="text-gray-500 mb-4">Your cart is empty</p>
                   <SheetClose asChild>
-                    <Button variant="cart" size="lg">Browse Restaurants</Button>
+                    <Button variant="cart" size="lg" asChild>
+                      <Link to="/">Browse Restaurants</Link>
+                    </Button>
                   </SheetClose>
                 </div>
               ) : (
                 <div className="flex flex-col h-full">
-                  <div className="flex-1 overflow-auto py-4">
-                    {/* Cart items would go here */}
-                    <p className="text-sm text-gray-500 mb-2">Your items appear here</p>
+                  <div className="flex-1 overflow-auto py-4 space-y-4">
+                    {restaurant && (
+                      <div className="flex items-center mb-2 pb-2 border-b">
+                        <img 
+                          src={restaurant.image} 
+                          alt={restaurant.name} 
+                          className="w-12 h-12 object-cover rounded-md mr-3"
+                        />
+                        <div>
+                          <h3 className="font-medium text-sm">{restaurant.name}</h3>
+                          <div className="flex items-center text-xs text-gray-500">
+                            <Clock className="h-3 w-3 mr-1" />
+                            <span>{restaurant.deliveryTime}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {items.map((item) => (
+                      <div key={item.id} className="flex items-start border-b pb-4">
+                        <div className="flex-1">
+                          <div className="flex justify-between">
+                            <h3 className="font-medium">{item.name}</h3>
+                            <button 
+                              onClick={() => removeFromCart(item.id)} 
+                              className="text-gray-400 hover:text-red-500"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                          
+                          <div className="flex items-center mt-1">
+                            <div className="flex items-center text-food-primary font-medium">
+                              <IndianRupee className="h-3 w-3" />
+                              <span>{item.price.toFixed(0)}</span>
+                            </div>
+                          </div>
+                          
+                          <div className="mt-2 flex items-center">
+                            <button 
+                              onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                              className="w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:bg-gray-100"
+                            >
+                              -
+                            </button>
+                            <span className="mx-2 text-sm">{item.quantity}</span>
+                            <button 
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              className="w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:bg-gray-100"
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                   
                   <SheetFooter className="border-t pt-4">
                     <div className="w-full space-y-4">
-                      <div className="flex justify-between">
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span>Subtotal</span>
+                          <div className="flex items-center">
+                            <IndianRupee className="h-3 w-3 mr-1" />
+                            <span>{cartSubtotal.toFixed(0)}</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span>Delivery Fee</span>
+                          <div className="flex items-center">
+                            <IndianRupee className="h-3 w-3 mr-1" />
+                            <span>{deliveryFee.toFixed(0)}</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span>GST (5%)</span>
+                          <div className="flex items-center">
+                            <IndianRupee className="h-3 w-3 mr-1" />
+                            <span>{tax.toFixed(0)}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between font-semibold">
                         <span>Total</span>
-                        <span className="font-semibold">${cartTotal.toFixed(2)}</span>
+                        <div className="flex items-center">
+                          <IndianRupee className="h-4 w-4 mr-1" />
+                          <span>{cartTotal.toFixed(0)}</span>
+                        </div>
                       </div>
                       <SheetClose asChild>
                         <Button variant="cart" size="full" asChild>

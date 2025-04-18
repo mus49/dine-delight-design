@@ -8,8 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/contexts/CartContext";
-import { CreditCard, Truck, Clock, MapPin, ChevronRight, Check } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { CreditCard, Truck, Clock, MapPin, ChevronRight, Check, IndianRupee } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -104,13 +104,16 @@ const Checkout = () => {
               )}
               
               <div className="space-y-3 mb-4">
-                {items.map((item, index) => (
-                  <div key={index} className="flex justify-between">
+                {items.map((item) => (
+                  <div key={item.id} className="flex justify-between">
                     <div className="flex items-start">
                       <span className="text-food-primary mr-2">{item.quantity}x</span>
-                      <span>Item Name {index + 1}</span>
+                      <span>{item.name}</span>
                     </div>
-                    <span>${(item.price * item.quantity).toFixed(2)}</span>
+                    <div className="flex items-center">
+                      <IndianRupee className="h-3 w-3 mr-1" />
+                      <span>{(item.price * item.quantity).toFixed(0)}</span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -118,21 +121,33 @@ const Checkout = () => {
               <div className="space-y-2 border-t pt-4 mb-4">
                 <div className="flex justify-between text-sm">
                   <span>Subtotal</span>
-                  <span>${cartSubtotal.toFixed(2)}</span>
+                  <div className="flex items-center">
+                    <IndianRupee className="h-3 w-3 mr-1" />
+                    <span>{cartSubtotal.toFixed(0)}</span>
+                  </div>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Delivery Fee</span>
-                  <span>${deliveryFee.toFixed(2)}</span>
+                  <div className="flex items-center">
+                    <IndianRupee className="h-3 w-3 mr-1" />
+                    <span>{deliveryFee.toFixed(0)}</span>
+                  </div>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Tax</span>
-                  <span>${tax.toFixed(2)}</span>
+                  <div className="flex items-center">
+                    <IndianRupee className="h-3 w-3 mr-1" />
+                    <span>{tax.toFixed(0)}</span>
+                  </div>
                 </div>
               </div>
               
               <div className="flex justify-between font-semibold border-t pt-4">
                 <span>Total</span>
-                <span>${cartTotal.toFixed(2)}</span>
+                <div className="flex items-center">
+                  <IndianRupee className="h-4 w-4 mr-1" />
+                  <span>{cartTotal.toFixed(0)}</span>
+                </div>
               </div>
             </div>
           </div>
