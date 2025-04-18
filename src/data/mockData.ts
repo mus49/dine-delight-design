@@ -227,7 +227,7 @@ export const burgerMenuItems: MenuItem[] = [
     restaurantId: "r2",
     name: "Butter Chicken",
     description: "Tender chicken pieces in rich, creamy tomato-based curry with butter and cream",
-    price: 299,
+    price: 499,
     image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?q=80&w=800",
     category: "Main Course",
     popular: true,
@@ -248,7 +248,7 @@ export const burgerMenuItems: MenuItem[] = [
         name: "Extras",
         choices: [
           { id: "c4", name: "Extra Naan", price: 30 },
-          { id: "c5", name: "Extra Gravy", price: 50 }
+          { id: "c5", name: "Extra Gravy", price: 40 }
         ],
         required: false,
         multiSelect: true
@@ -260,7 +260,7 @@ export const burgerMenuItems: MenuItem[] = [
     restaurantId: "r2",
     name: "Paneer Tikka Masala",
     description: "Grilled cottage cheese cubes in a rich, spiced tomato-based curry",
-    price: 249,
+    price: 399,
     image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?q=80&w=800",
     category: "Main Course",
     popular: true,
@@ -283,7 +283,7 @@ export const burgerMenuItems: MenuItem[] = [
     restaurantId: "r2",
     name: "Dal Tadka",
     description: "Yellow lentils tempered with cumin, garlic, and spices",
-    price: 179,
+    price: 249,
     image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=800",
     category: "Main Course",
     popular: false
@@ -303,7 +303,7 @@ export const burgerMenuItems: MenuItem[] = [
     restaurantId: "r2",
     name: "Jeera Rice",
     description: "Basmati rice cooked with cumin seeds",
-    price: 129,
+    price: 149,
     image: "https://images.unsplash.com/photo-1596097557993-54e1bbd4e13b?q=80&w=800",
     category: "Rice",
     popular: false
