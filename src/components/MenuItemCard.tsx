@@ -4,9 +4,10 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MenuItem } from "@/types/food";
-import { Plus, Minus, Star } from "lucide-react";
+import { Plus, Minus, IndianRupee } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -16,29 +17,25 @@ export function MenuItemCard({ item }: MenuItemCardProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
   const { addToCart } = useCart();
+  const { toast } = useToast();
   
   const incrementQuantity = () => setQuantity(prev => prev + 1);
   const decrementQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
   
   const handleOptionChange = (optionId: string, choiceId: string, multiSelect: boolean) => {
     setSelectedOptions(prev => {
-      // Find if this option is already selected
       const existingOptionIndex = prev.findIndex(opt => opt.optionId === optionId);
       
       if (existingOptionIndex >= 0) {
-        // Option exists
         const existingOption = prev[existingOptionIndex];
         
         if (multiSelect) {
-          // For multi-select options, toggle the choice
           const choiceIndex = existingOption.choiceIds.indexOf(choiceId);
           let newChoiceIds;
           
           if (choiceIndex >= 0) {
-            // Remove choice if already selected
             newChoiceIds = existingOption.choiceIds.filter((id: string) => id !== choiceId);
           } else {
-            // Add choice if not selected
             newChoiceIds = [...existingOption.choiceIds, choiceId];
           }
           
@@ -53,7 +50,6 @@ export function MenuItemCard({ item }: MenuItemCardProps) {
             ...prev.slice(existingOptionIndex + 1)
           ];
         } else {
-          // For single select, replace the choice
           return [
             ...prev.slice(0, existingOptionIndex),
             { optionId, choiceIds: [choiceId] },
@@ -61,7 +57,6 @@ export function MenuItemCard({ item }: MenuItemCardProps) {
           ];
         }
       } else {
-        // Option doesn't exist, add it
         return [...prev, { optionId, choiceIds: [choiceId] }];
       }
     });
@@ -69,6 +64,10 @@ export function MenuItemCard({ item }: MenuItemCardProps) {
   
   const handleAddToCart = () => {
     addToCart(item, quantity, selectedOptions);
+    toast({
+      title: "Added to cart",
+      description: `${quantity}x ${item.name} added to your cart`,
+    });
     setQuantity(1);
     setSelectedOptions([]);
   };
@@ -76,6 +75,20 @@ export function MenuItemCard({ item }: MenuItemCardProps) {
   const isOptionSelected = (optionId: string, choiceId: string) => {
     const option = selectedOptions.find(opt => opt.optionId === optionId);
     return option && option.choiceIds.includes(choiceId);
+  };
+  
+  const calculateItemTotal = () => {
+    let total = item.price * 80; // Base price in INR
+    selectedOptions.forEach(option => {
+      option.choiceIds.forEach((choiceId: string) => {
+        const optionDef = item.options?.find(o => o.id === option.optionId);
+        const choiceDef = optionDef?.choices.find(c => c.id === choiceId);
+        if (choiceDef && choiceDef.price) {
+          total += choiceDef.price * 80;
+        }
+      });
+    });
+    return total * quantity;
   };
   
   return (
@@ -100,7 +113,10 @@ export function MenuItemCard({ item }: MenuItemCardProps) {
             <CardContent className="p-4">
               <h3 className="font-semibold text-lg mb-1">{item.name}</h3>
               <p className="text-gray-500 text-sm line-clamp-2 mb-2">{item.description}</p>
-              <p className="font-medium text-food-primary">${item.price.toFixed(2)}</p>
+              <div className="flex items-center font-medium text-food-primary">
+                <IndianRupee className="h-4 w-4" />
+                <span>{(item.price * 80).toFixed(0)}</span>
+              </div>
             </CardContent>
           </div>
         </DialogTrigger>
@@ -115,7 +131,10 @@ export function MenuItemCard({ item }: MenuItemCardProps) {
             />
             <DialogTitle className="text-xl font-bold">{item.name}</DialogTitle>
             <p className="text-gray-600 mt-2">{item.description}</p>
-            <p className="font-medium text-food-primary text-lg mt-2">${item.price.toFixed(2)}</p>
+            <div className="flex items-center font-medium text-food-primary text-lg mt-2">
+              <IndianRupee className="h-5 w-5" />
+              <span>{(item.price * 80).toFixed(0)}</span>
+            </div>
           </DialogHeader>
           
           <div className="mt-4 space-y-6">
@@ -152,7 +171,10 @@ export function MenuItemCard({ item }: MenuItemCardProps) {
                         <span>{choice.name}</span>
                       </div>
                       {choice.price && choice.price > 0 && (
-                        <span className="text-gray-600">+${choice.price.toFixed(2)}</span>
+                        <div className="flex items-center text-gray-600">
+                          <IndianRupee className="h-4 w-4" />
+                          <span>{(choice.price * 80).toFixed(0)}</span>
+                        </div>
                       )}
                     </div>
                   ))}
@@ -186,8 +208,11 @@ export function MenuItemCard({ item }: MenuItemCardProps) {
             <Button 
               variant="cart" 
               onClick={handleAddToCart}
+              className="flex items-center"
             >
-              Add to Cart - ${(item.price * quantity).toFixed(2)}
+              <span>Add to Cart - </span>
+              <IndianRupee className="h-4 w-4 mx-1" />
+              <span>{calculateItemTotal().toFixed(0)}</span>
             </Button>
           </div>
         </DialogContent>

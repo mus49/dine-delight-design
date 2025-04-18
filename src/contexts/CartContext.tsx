@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { CartItem, MenuItem, Restaurant } from "@/types/food";
 import { v4 as uuidv4 } from 'uuid';
+import { IndianRupee } from "lucide-react";
 
 interface CartContextType {
   items: CartItem[];
@@ -14,6 +15,7 @@ interface CartContextType {
   cartSubtotal: number;
   deliveryFee: number;
   tax: number;
+  getItemById: (itemId: string) => CartItem | undefined;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -21,22 +23,24 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
-  const deliveryFee = restaurant ? parseFloat(restaurant.deliveryFee.replace('$', '')) : 0;
-  const tax = calculateSubtotal() * 0.08;
+  const deliveryFee = restaurant ? parseFloat(restaurant.deliveryFee.replace('$', '')) * 80 : 0; // Convert to INR
+  const tax = calculateSubtotal() * 0.05; // 5% GST
   
   function calculateSubtotal() {
     return items.reduce((total, item) => total + item.price * item.quantity, 0);
+  }
+
+  function getItemById(itemId: string) {
+    return items.find(item => item.id === itemId);
   }
   
   function addToCart(menuItem: MenuItem, quantity: number, selectedOptions: any[] = []) {
     const { restaurantId } = menuItem;
     
-    // If adding from a different restaurant, clear the cart first
     if (restaurant && restaurant.id !== restaurantId) {
       clearCart();
     }
     
-    // Set the restaurant if it's not already set
     if (!restaurant) {
       import('@/data/mockData').then(({ restaurants }) => {
         const newRestaurant = restaurants.find(r => r.id === restaurantId);
@@ -46,14 +50,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
     }
     
-    // Calculate the total price including options
-    let itemPrice = menuItem.price;
+    let itemPrice = menuItem.price * 80; // Convert USD to INR
     selectedOptions.forEach(option => {
       option.choiceIds.forEach((choiceId: string) => {
         const optionDef = menuItem.options?.find(o => o.id === option.optionId);
         const choiceDef = optionDef?.choices.find(c => c.id === choiceId);
         if (choiceDef && choiceDef.price) {
-          itemPrice += choiceDef.price;
+          itemPrice += choiceDef.price * 80; // Convert USD to INR
         }
       });
     });
@@ -61,6 +64,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const newItem: CartItem = {
       id: uuidv4(),
       menuItemId: menuItem.id,
+      name: menuItem.name,
       quantity,
       selectedOptions,
       price: itemPrice,
@@ -106,7 +110,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         cartTotal,
         cartSubtotal,
         deliveryFee,
-        tax
+        tax,
+        getItemById
       }}
     >
       {children}
