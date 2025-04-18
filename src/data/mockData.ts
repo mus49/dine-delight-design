@@ -1,10 +1,9 @@
-
 import { Category, Restaurant, MenuItem, Order } from "@/types/food";
 
 // Categories
 export const categories: Category[] = [
   { id: "c1", name: "Pizza", image: "/images/categories/pizza.jpg" },
-  { id: "c2", name: "Burgers", image: "/images/categories/burgers.jpg" },
+  { id: "c2", name: "Indian", image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=800" },
   { id: "c3", name: "Sushi", image: "/images/categories/sushi.jpg" },
   { id: "c4", name: "Pasta", image: "/images/categories/pasta.jpg" },
   { id: "c5", name: "Desserts", image: "/images/categories/desserts.jpg" },
@@ -28,13 +27,13 @@ export const restaurants: Restaurant[] = [
   },
   {
     id: "r2",
-    name: "Burger Bliss",
-    image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?q=80&w=800",
-    deliveryTime: "15-30 min",
-    rating: 4.5,
-    deliveryFee: "$2.49",
+    name: "Spice Paradise",
+    image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?q=80&w=800",
+    deliveryTime: "25-40 min",
+    rating: 4.8,
+    deliveryFee: "₹40",
     categories: ["c2"],
-    tags: ["American", "Fast Food"],
+    tags: ["Indian", "Vegetarian options", "Spicy"],
     featured: true,
   },
   {
@@ -221,35 +220,58 @@ export const menuItems: MenuItem[] = [
   },
 ];
 
-// Menu Items for Burger Bliss
+// Menu Items for Spice Paradise
 export const burgerMenuItems: MenuItem[] = [
   {
-    id: "b1",
+    id: "i1",
     restaurantId: "r2",
-    name: "Classic Cheeseburger",
-    description: "Beef patty, cheddar cheese, lettuce, tomato, onion, and house sauce on a brioche bun",
-    price: 12.99,
-    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800",
-    category: "Burgers",
+    name: "Butter Chicken",
+    description: "Tender chicken pieces in rich, creamy tomato-based curry with butter and cream",
+    price: 299,
+    image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?q=80&w=800",
+    category: "Main Course",
     popular: true,
     options: [
       {
         id: "o1",
-        name: "Patty",
+        name: "Spice Level",
         choices: [
-          { id: "c1", name: "Regular", price: 0 },
-          { id: "c2", name: "Double", price: 3 }
+          { id: "c1", name: "Mild", price: 0 },
+          { id: "c2", name: "Medium", price: 0 },
+          { id: "c3", name: "Hot", price: 0 }
         ],
         required: true,
         multiSelect: false
       },
       {
         id: "o2",
-        name: "Cheese",
+        name: "Extras",
         choices: [
-          { id: "c3", name: "Cheddar", price: 0 },
-          { id: "c4", name: "American", price: 0 },
-          { id: "c5", name: "Swiss", price: 0.5 }
+          { id: "c4", name: "Extra Naan", price: 30 },
+          { id: "c5", name: "Extra Gravy", price: 50 }
+        ],
+        required: false,
+        multiSelect: true
+      }
+    ]
+  },
+  {
+    id: "i2",
+    restaurantId: "r2",
+    name: "Paneer Tikka Masala",
+    description: "Grilled cottage cheese cubes in a rich, spiced tomato-based curry",
+    price: 249,
+    image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?q=80&w=800",
+    category: "Main Course",
+    popular: true,
+    options: [
+      {
+        id: "o1",
+        name: "Spice Level",
+        choices: [
+          { id: "c1", name: "Mild", price: 0 },
+          { id: "c2", name: "Medium", price: 0 },
+          { id: "c3", name: "Hot", price: 0 }
         ],
         required: true,
         multiSelect: false
@@ -257,14 +279,34 @@ export const burgerMenuItems: MenuItem[] = [
     ]
   },
   {
-    id: "b2",
+    id: "i3",
     restaurantId: "r2",
-    name: "Bacon BBQ Burger",
-    description: "Beef patty, BBQ sauce, crispy bacon, caramelized onions, and cheddar cheese",
-    price: 15.99,
-    image: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=800",
-    category: "Burgers",
+    name: "Dal Tadka",
+    description: "Yellow lentils tempered with cumin, garlic, and spices",
+    price: 179,
+    image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=800",
+    category: "Main Course",
+    popular: false
+  },
+  {
+    id: "i4",
+    restaurantId: "r2",
+    name: "Garlic Naan",
+    description: "Freshly baked Indian bread with garlic and butter",
+    price: 49,
+    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=800",
+    category: "Breads",
     popular: true
+  },
+  {
+    id: "i5",
+    restaurantId: "r2",
+    name: "Jeera Rice",
+    description: "Basmati rice cooked with cumin seeds",
+    price: 129,
+    image: "https://images.unsplash.com/photo-1596097557993-54e1bbd4e13b?q=80&w=800",
+    category: "Rice",
+    popular: false
   }
 ];
 
